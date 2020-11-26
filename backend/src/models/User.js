@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt')
 
 class User extends Model {
     static init(sequelize){
@@ -14,7 +13,7 @@ class User extends Model {
     }
         
     static associate(models){
-        this.hasOne(models.Dice, { foreignKey: 'user_id', as: 'dices' })
+        this.belongsToMany(models.Interest, { foreignKey: 'user_id', through:'interest_users', as: 'interests' })
     }
 }
 
