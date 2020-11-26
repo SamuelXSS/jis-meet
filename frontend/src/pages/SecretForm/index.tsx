@@ -9,29 +9,25 @@ import './styles.css'
 
 const SecretForm: React.FC = () => {
 
-    const [name, setName] = useState('')
-    const [secret, setSecret] = useState('')
-
+    
     const FormWithToasts = () => {
+        const [name, setName] = useState('')
+        const [secret, setSecret] = useState('')
         const { addToast } = useToasts()
-        async function SubmitSecret(e: FormEvent) {
+        const SubmitSecret = async(e: FormEvent) => {
             e.preventDefault()
-            const error = { message: 'oi' }
-
-            if (error) {
-                addToast(error.message, { appearance: 'success' })
-            } else {
-                addToast('Saved Successfully', { appearance: 'success' })
-            }
-
             await api.post('/secret', {
-                params: {
-                    name,
-                    secret,
+                name,
+                secret
+            }).then((res) => {
+                addToast(res.data.success, { appearance: 'success' })
+                
+            }).catch((err) => {
+                if (err.response) {
+                    addToast(err.response.data.error, { appearance: 'error' })
                 }
             })
         }
-
         return (
             <form id="tell-secret" onSubmit={SubmitSecret}>
                 <Input
@@ -48,10 +44,11 @@ const SecretForm: React.FC = () => {
                 />
                 <button type="submit" onSubmit={SubmitSecret}>
                     Contar
-                    </button>
+                </button>
             </form>
         )
     }
+
 
     return (
         <div id="page-tell-secret" className="container">

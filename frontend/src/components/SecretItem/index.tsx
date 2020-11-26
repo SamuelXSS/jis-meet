@@ -1,5 +1,6 @@
 import React from 'react'
-import api from '../../services/api'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons'
 
 import './styles.css'
 
@@ -16,11 +17,6 @@ interface SecretItemProps {
 }
 
 const SecretItem: React.FC<SecretItemProps> = ({ secret }) => {
-    function createNewConnection() {
-        api.post('/connections', {
-            user_id: secret.id
-        })
-    }
     
     return (
         <article className="secret-item">
@@ -31,18 +27,20 @@ const SecretItem: React.FC<SecretItemProps> = ({ secret }) => {
                 </div>
             </header>
     
-            <p className="content">
-                {secret.secret}
-            </p>
+            <div className="content">
+                <p className="secret-content">
+                    {secret.secret}
+                </p>
+            </div>
     
             <footer>
                 <p>
-                    Likes
-                    <strong> {secret.like}</strong>
+                    <FontAwesomeIcon className="likeBtn" icon={faHeart} />
+                    <small> {secret.like} Em breve</small>
                 </p>
                 <p>
-                    Comentários
-                    <strong> {secret.comment}</strong>
+                    <FontAwesomeIcon className="commentBtn" icon={faComment} />
+                    <small> {secret.comment} Em breve</small>
                 </p>
             </footer>
         </article>

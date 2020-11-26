@@ -24,7 +24,7 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
             </div>
 
             <div className="header-content">
-                <img src={bg} className="header-logo" />
+                <img src={bg} className="header-logo" alt="Background" />
                 <strong style={{zIndex:999}}>{props.title}</strong>
                 { props.description && <p style={{zIndex:999}}>{props.description}</p>}
 

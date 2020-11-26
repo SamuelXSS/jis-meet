@@ -27,7 +27,7 @@
     transition: opacity 0.2s;
 }
 
-.page-header .top-bar-container a: hover {
+.page-header .top-bar-container a:hover {
     opacity: 0.6;
 }
 

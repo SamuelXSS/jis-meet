@@ -1,7 +1,7 @@
 #page-landing {
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    overflow: auto;
 
     display: flex;
     justify-content: center;
@@ -11,20 +11,100 @@
     background: var(--color-primary);
 }
 
-.lpLink {
-    background-color: transparent;
-    color: white;
-    border: none;
-}
-.lpLink:focus{
-    outline: none;
-    border: none;
+li {
+    list-style: none;
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
 }
 
-.dropdown {
-    background-color: transparent;
-    border: none;
+li:hover{
     color: white;
+}
+
+.sidebar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3.2rem 0;
+}
+
+
+.sidebar {
+    height: 580px;
+    padding: 15px;
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #ae00ff;
+    border-radius: 5px;
+}
+
+.avatar-header {
+    align-items: center;
+}
+
+.avatar {
+    border: 2px solid white;
+    width: 93px;
+    height: 93px;
+    border-radius: 93px;
+}
+
+.profile-img {
+    width: 89px;
+    height: 89px;
+    border-radius: 89px;
+}
+
+.profile-box-1 {
+    width: 300px;
+    padding: 0px;
+    background-color:#ae00ff;
+    border-radius: 6px;
+    height: auto;
+}
+
+.profile-header {
+    background-color: #3c0e51;
+    display: flex;
+    height: 50px;
+    border-radius: 5px 5px 0px 0px;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    color: white;
+}
+
+.profile-footer {
+    background-color: #3c0e51;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.chip-content{ 
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-bottom: 30px;
+}
+
+.divider { 
+    background-color: rgb(187, 187, 187);
+    width: 90%;
+    height: 0.5px;
 }
 
 .page-landing-header {
@@ -51,14 +131,6 @@
     cursor: pointer;
     height: 3.2rem;
     transition: opacity 0.2s;
-}
-
-.dialog-title {
-    font: 500 1.3rem Poppins;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
 }
 
 .loginBtn {
@@ -110,76 +182,11 @@
     margin-top: 0.8rem;
 }
 
-.buttons-container {
+.profile-box-container {
     display: flex;
-    justify-content: center;
-    margin: 3.2rem 0;
-}
-
-.buttons-container a {
-    width: 30rem;
-    height: 10.4rem;
-    border-radius: 0.8rem;
-    font: 700 2.0rem Archivo;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-decoration: none;
-    color: var(--color-button-text);
-    padding: 5px;
-    transition: background-color 0.2s;
-}
-
-.buttons-container a:first-child {
-    margin-right: 0.7rem;
-}
-
-.buttons-container a img {
-    width: 4rem;
-}
-
-.buttons-container a.tell-secret {
-    background: var(--color-primary-lighter);
-}
-
-.buttons-container a.archive {
-    margin-right: 0.7rem;
-    background: var(--color-secundary);
-}
-
-.buttons-container a.jis-meet {
-    background: #ff348f;
-}
-
-.buttons-container a.tell-secret:hover {
-    background: var(--color-primary-light);
-}
-
-.buttons-container a.archive:hover {
-    background: #d39f2e;
-}
-
-.buttons-container a.jis-meet:hover {
-    cursor: wait;
-    background: #d4317a;
-}
-
-.buttons-container a img {
-    margin-right: 2.0rem;
-}
-
-.total-connections {
-    font-size: 1.4rem;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.total-connections img {
-    margin-left: 0.8rem;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 1.2rem;
 }
 
 @media (min-width: 1100px) {
@@ -203,6 +210,10 @@
         max-width: 1100px;
     }
 
+    .sidebar{
+        height: 100%;
+    }
+
     .logo-container {
         grid-area: logo;
         align-self: center;
@@ -221,24 +232,6 @@
 
     .hero-image {
         grid-area: hero;
-        justify-self: end;
-    }
-
-    .buttons-container a.jis-meet {
-        margin-right: 1.6rem;
-    }
-
-    .buttons-container {
-        grid-area: buttons;
-        justify-content: flex-start;
-    }
-
-    .buttons-container a {
-        font-size: 2.4rem;
-    }
-
-    .total-connections {
-        grid-area: total;
         justify-self: end;
     }
 }

@@ -7,18 +7,39 @@
 }
 
 .content {
-    max-height: 12rem;
+    max-height: 15rem;
     color: white;
     overflow: auto;
+    overflow-wrap: break-word;
 }
 
 .secret-item header {
-    padding: 3.2rem 2rem;
+    padding: 3.2rem 2rem;   
     display: flex;
     background-color: var(--color-primary-darkeer);
     border-radius: 7px 7px 0px 0px;
     align-items: center;
     color: #c4c4c4;
+}
+
+.commentBtn{
+    font-size: 20px;
+    color: white;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.likeBtn{
+    font-size: 20px;
+    color: white;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.likeBtn:hover{
+    color: red;
+}
+
+.secret-content {
+    padding: 0 3.2rem;
 }
 
 .secret-item header img {
@@ -118,6 +139,7 @@
     .secret-item {
         margin-right: 20px;
         width: 500px;
+        max-width: 500px;
     }
 
     .secret-item header,
@@ -126,7 +148,7 @@
         padding: 3.2rem;
     }
 
-    .secret-item>p {
+    .secret-content {
         padding: 0 3.2rem;
     }
 
