@@ -7,10 +7,21 @@
     margin-top: 3.2rem;
 }
 
+.secret-box-container{
+    padding-bottom: 20px;
+}
+
 #tell-secret label {
     color: var(--color-text-in-primary);
 }
-
+.label-font{
+    font: 1.4rem Archivo;
+}
+.color-picker{
+    width: 310px !important;
+    margin-bottom: 1rem;
+    margin-top: 1.4rem;
+}
 #tell-secret button {    
     width: 50%;
     height: 5.6rem;
@@ -39,6 +50,11 @@
 }
 
 @media (min-width: 700px) {
+    .secret-sub-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
     #page-tell-secret {
         max-width: 100%;
     }
@@ -47,7 +63,6 @@
         display: column;
         grid-template-columns: repeat(4, 1fr);
         column-gap: 16px;
-        position: absolute;
     }
 
     #tell-secret .input-block + .input-block,

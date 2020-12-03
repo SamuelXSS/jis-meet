@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/auth';
+import { ToastProvider, useToasts } from 'react-toast-notifications'
 
 import logoImg from '../../assets/images/logo.png'
 import landingImg from '../../assets/images/bg.png'
@@ -54,16 +55,23 @@ const Landing: React.FC = () => {
         context.Login(userLogin, passLogin)
         setOpenLogin(false)
     }
+    const handleKeyPress = (event:any) => {
+        if(event.key === 'Enter'){
+          handleLogin()
+        }
+      }
 
     async function Register() {
         await api.post('/user', {
             name,
-            username: user,
+            username: userR,
             pass,
             token: ''
 
         }).then(res => {
             console.log(res);
+            context.Login(userR, pass)
+            setOpen(false)
         }).catch(err => {
             if (err.response) {
                 console.log(err.response.data.error)
@@ -78,7 +86,7 @@ const Landing: React.FC = () => {
                     <div>  </div>
                     <div className="loginContainer">
                         <Link className="lpLink" to={signed ? '/perfil' : ''} onClick={() => signed ? '' : handleClickOpen('login')}  >
-                            {signed ? user : "Login / Cadastro"}
+                            {signed ? user?.name : "Login / Cadastro"}
                         </Link>
                         {/* <img className="loginImg" src={loginImg} alt="Proffy" /> */}
                     </div>
@@ -155,6 +163,7 @@ const Landing: React.FC = () => {
                                 name="pass"
                                 type="password"
                                 label="Senha"
+                                onKeyPress={handleKeyPress}
                                 value={passLogin}
                                 onChange={(e) => { setPassLogin(e.target.value) }}
                             />

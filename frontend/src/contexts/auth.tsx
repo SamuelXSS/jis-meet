@@ -1,19 +1,21 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import jwt from 'jwt-decode';
 import api from '../services/api';
-import * as auth from '../services/auth'
 
 interface User {
-    id: number;
-    username: string;
-    name: string;
-    token: string;
-  }
+    id: number,
+    name: string,
+    username: string,
+    secrets: {
+        content: string,
+        color: string,
+        quantity: number
+    }
+}
 
 interface AuthContextData {
     signed: boolean;
-    user: User | null;
-    Login(user: string, pass: string): Promise<void>;
+    user: User | null
+    Login(user: string, pass: string): Promise<any>;
     Logout(): void;
 }
 
@@ -29,25 +31,34 @@ export const AuthProvider: React.FC = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-        async function loadStorageData() {
-            const storagedUser = localStorage.getItem('@App:user');
-            const storagedToken = localStorage.getItem('@App:token');
+        const storagedUser = localStorage.getItem('@App:user');
+        const storagedToken = localStorage.getItem('@App:token');
 
-            if (storagedToken && storagedUser) {
-                setUser(JSON.parse(storagedUser));
-                api.defaults.headers.Authorization = `Bearer ${storagedToken}`;
-            }
+        if (storagedToken && storagedUser) {
+            setUser(JSON.parse(storagedUser));
+            api.defaults.headers.Authorization = `Bearer ${storagedToken}`;
         }
-        loadStorageData();
-    });
+    }, []);
 
     async function Login(user: string, pass: string) {
-        const res = await auth.signIn('samuelxses','S@muel1234')
-            console.log(res)
-            setUser(res.user);
-            api.defaults.headers.Authorization = `Bearer ${res.user.token}`          
-            localStorage.setItem('@App:user', JSON.stringify(res.user.username));
-            localStorage.setItem('@App:token', res.user.token)
+        const res = await api.post('/auth', {
+            username: user,
+            pass: pass,
+        }).then((res) => {
+            const { user } = res.data
+            setUser(user);
+            api.defaults.headers.Authorization = `Bearer ${res.data.token}`
+
+            localStorage.setItem('@App:user', JSON.stringify(res.data.user));
+            localStorage.setItem('@App:token', res.data.token)
+
+            return true
+        }).catch(err => {
+            if (err.response) {
+                return false
+            }
+        })
+        return res
     }
 
     function Logout() {

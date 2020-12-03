@@ -10,6 +10,7 @@ export interface Secret {
     id: number
     like: number
     comment: number
+    color: string
 }
 
 interface SecretItemProps {
@@ -19,8 +20,8 @@ interface SecretItemProps {
 const SecretItem: React.FC<SecretItemProps> = ({ secret }) => {
     
     return (
-        <article className="secret-item">
-            <header>
+        <article key={secret.id} className="secret-item">
+            <header style={{backgroundColor:secret.color}}>
                 <div>
                     <strong>{secret.name} </strong>
                     <span style={{fontSize: 10}}>Anônimo</span>
@@ -33,7 +34,7 @@ const SecretItem: React.FC<SecretItemProps> = ({ secret }) => {
                 </p>
             </div>
     
-            <footer>
+            <footer style={{backgroundColor:secret.color}}>
                 <p>
                     <FontAwesomeIcon className="likeBtn" icon={faHeart} />
                     <small> {secret.like} Em breve</small>

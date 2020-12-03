@@ -63,6 +63,8 @@
 
 .loginBtn {
     margin-left: 5px;
+    background-color: transparent;
+    border: none;
     cursor: pointer;
     font-size: 14px;
     height: 3.2rem;
@@ -74,7 +76,10 @@
 .loginBtn:hover {
     opacity: 0.6;
 }
-
+.login:focus{
+    border: none;
+    outline: none;
+}
 .page-landing-header .top-bar-container a:hover {
     opacity: 0.6;
 }

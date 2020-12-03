@@ -3,8 +3,11 @@ import { useAuth } from '../../contexts/auth';
 import logoImg from '../../assets/images/logo.png'
 import profileImg from '../../assets/images/perfil.jpg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faSignOutAlt, faLock } from '@fortawesome/free-solid-svg-icons'
 import { Input } from '../../components'
+import { Link } from 'react-router-dom'
+import backIcon from '../../assets/images/icons/back.svg'
+import api from '../../services/api'
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
@@ -14,24 +17,47 @@ import Chip from '@material-ui/core/Chip';
 import './style.css'
 
 interface ChipData {
-    key: number;
-    label: string;
+    id: number;
+    name: string;
+}
+
+interface Interests {
+    id: number;
+    name: string;
 }
 
 const Profile: React.FC = () => {
+    const interests: any = []
+    const allInterests: any = []
 
     const context = useAuth();
     const { user, Logout } = context
-    const [chipData, setChipData] = React.useState<ChipData[]>([
-        { key: 0, label: 'Angular' },
-        { key: 1, label: 'jQuery' },
-        { key: 2, label: 'Polymer' },
-        { key: 3, label: 'React' },
-        { key: 4, label: 'Vue.js' },
-    ]);
+    const [chipData, setChipData] = useState<ChipData[]>(interests);
+    const [userInterests, setUserIntersts] = useState<Interests[]>(allInterests);
+
+    useEffect(() => {
+        async function getInterests() {
+            const res = await api.get(`/users/${user?.id}/interest`)
+            setChipData(res.data)
+        }
+        async function getUserInterests() {
+            const res = await api.get('/interests')
+            setUserIntersts(res.data)
+        }
+        getInterests()
+        getUserInterests()
+    }, []);
+
+    async function updateInterest(value: string) {
+        await api.post(`/users/${user?.id}/interest`, {
+            name: value
+        })
+            .then(res => { console.log(res) })
+            .catch(err => { if (err.response) console.log(err.response.data) })
+    }
 
     const handleDelete = (chipToDelete: ChipData) => () => {
-        setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+        setChipData((chips) => chips.filter((chip) => chip.id !== chipToDelete.id));
     };
 
     async function handleLogout() {
@@ -39,79 +65,95 @@ const Profile: React.FC = () => {
     }
 
     return (
-        <div id="page-landing">
-            <header className="page-landing-header">
+        <div id="page-profile">
+            <header className="page-profile-header">
                 <div className="top-bar-container">
-                    <div>  </div>
+                    <div>
+                    <Link to="/">
+                            <img src={backIcon} alt="Voltar" />
+                        </Link>
+                    </div>
                     <div className="loginContainer">
                         <img className="loginImg" src={logoImg} alt="Proffy" />
                     </div>
                 </div>
             </header>
-            <div id="page-landing-content" className="container">
+            <div id="page-profile-content" className="container">
 
                 <div className="sidebar-container">
                     <div className="sidebar">
                         <div className="avatar-header">
                             <div className="avatar">
                                 <img className="profile-img" src={profileImg} alt="Perfil" />
-                                {user}
+                                <div style={{ fontWeight: 600, color: '#fff', marginTop: 5 }}>{user?.name}</div>
+                                <div style={{ fontSize: 13 }}>20 anos</div>
                             </div>
                         </div>
                         <div className="divider"></div>
                         <div className="menu-items">
                             <ul>
+                                <li>{user?.secrets.quantity}</li>
+                                <li onClick={handleLogout}>
+                                    <FontAwesomeIcon icon={faLock} /> Alterar Senha
+                                </li>
                                 <li onClick={handleLogout}>
                                     <FontAwesomeIcon icon={faSignOutAlt} /> Logout
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div className="profile-box-container">
-                        <div className="profile-box-1">
-                            <div className="profile-header">
-                                Perfil
+                </div>
+                <div className="profile-box-container">
+                    <div className="profile-box-1">
+                        <div className="profile-header">
+                            Perfil
                         </div>
-                            <div className="profile-content">
+                        <div className="profile-content">
+                            <div className="profile-content-header">
                                 Interesses:
-                                    {/* <Autocomplete
-                                        multiple
-                                        id="tags-standard"
-                                        options={top100Films}
-                                        getOptionLabel={(option) => option.title}
-                                        defaultValue={[top100Films[13]]}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Multiple values"
-                                                placeholder="Favorites"
+                                <Autocomplete
+                                    id="tags-standard"
+                                    onInputChange={(event, newValue) => {
+                                        setChipData([...chipData, { id: 3, name: newValue }])
+                                        updateInterest(newValue)
+                                    }}
+                                    options={userInterests}
+                                    // getOptionLabel={(option) => { option.name }}
+                                    renderInput={(params) => (
+                                        <div ref={params.InputProps.ref}>
+                                            <input type="text" {...params.inputProps} />
+                                        </div>
+                                    )}
+                                />
+                            </div>
+                            <div className="chip-content">
+                                {chipData.map((data) => {
+                                    return (
+                                        <li key={data.id}>
+                                            <Chip
+                                                variant="outlined"
+                                                style={{
+                                                    color: '#fff',
+                                                    borderColor: '#fff',
+                                                    margin: 3,
+                                                    height: 25,
+                                                    fontWeight: 600,
+                                                    fontSize: 13,
+                                                }}
+                                                label={data.name}
+                                                onDelete={handleDelete(data)}
                                             />
-                                        )}
-                                    /> */}
-                                <div className="chip-content">
-                                    {chipData.map((data) => {
-                                        return (
-                                            <li key={data.key}>
-                                                <Chip
-                                                    variant="outlined"
-                                                    style={{ color: '#fff', borderColor: '#fff', margin: 3, height: 25, fontWeight: 600 }}
-                                                    label={data.label}
-                                                    onDelete={handleDelete(data)}
-                                                />
-                                            </li>
-                                        )
-                                    })}
-                                </div>
-                                <div className="divider"></div>
+                                        </li>
+                                    )
+                                })}
                             </div>
-                            <div className="profile-footer">
+                            <div className="divider"></div>
+                        </div>
+                        <div className="profile-footer">
 
-                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     )

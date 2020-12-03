@@ -15,6 +15,7 @@ function SecretArchive() {
         const response = await api.get('/secret')
 
         setSecrets(response.data)
+        console.log(response.data)
     }
 
     return (
@@ -26,7 +27,7 @@ function SecretArchive() {
 
             <main>
                 {secrets.map((secret: Secret) => {
-                    return <div className="secret-card"><SecretItem key={secret.id} secret={secret} /></div>
+                    return <div key={secret.id} className="secret-card"><SecretItem secret={secret} /></div>
                 })}
             </main>
         </div>
