@@ -14,5 +14,6 @@ Interest.init(connection)
 // Secret.associate(connection.models)
 User.associate(connection.models)
 Interest.associate(connection.models)
+Secret.associate(connection.models)
 
 module.exports = connection;

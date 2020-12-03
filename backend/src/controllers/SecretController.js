@@ -1,5 +1,6 @@
 const Secret = require('../models/Secret')
-const { Embed } = require('../config/embed')
+const User = require('../models/User')
+
 module.exports = {
     async show (req, res) { 
         const number = await Secret.count()
@@ -9,30 +10,17 @@ module.exports = {
     async index (req, res) {
         const secrets = await Secret.findAll()
 
-        // const embed = {
-        //     title: 'Teste',
-        //     author: {
-        //         name: secrets[0].name,
-        //         avatar: 'https://www.pngkey.com/png/full/115-1150420_avatar-png-pic-male-avatar-icon-png.png',
-        //         url: 'http://localhost:3001'
-        //     },
-        //     url: 'http://localhost:3001',
-        //     color: '#9834eb',
-        //     thumbnail: 'https://www.pngkey.com/png/full/115-1150420_avatar-png-pic-male-avatar-icon-png.png',
-        //     description: secrets[0].secret,
-        //     image: 'https://www.pngkey.com/png/full/115-1150420_avatar-png-pic-male-avatar-icon-png.png',
-        //     footer: {
-        //         title: 'Teste JIS',
-        //         thumbnail: 'https://www.pngkey.com/png/full/115-1150420_avatar-png-pic-male-avatar-icon-png.png'
-        //     }
-        // }
-        // console.log(embed)
-        // Embed(embed)
-
         return res.json(secrets)
     },
     async store(req, res){
-        const { name, secret } = req.body
+        const { user_id } = req.params
+        const { name, secret, color, text_color } = req.body
+
+        const user = await User.findByPk(user_id)
+
+        if(!user){
+            return res.status(404).json({ error: 'Não foi possível encontrar esse usuário!' })
+        }
 
         if(secret == ''){
             return res.status(400).json({error: 'Infelizmente não é possível não contar um segredo :( Diga alguma coisa!'})
@@ -40,7 +28,10 @@ module.exports = {
         
         const tellSecret = await Secret.create({
             name,
-            secret
+            color,
+            secret,
+            text_color,
+            user_id
         })
 
         return res.status(200).json({success: 'Segredo contado com sucesso! Vá no arquivo para vê-lo.', tellSecret})

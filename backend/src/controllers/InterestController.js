@@ -3,6 +3,11 @@ const Interest = require('../models/Interest')
 
 module.exports = {
     async index (req, res) {
+        const interests = await Interest.findAll()
+
+        return res.json(interests)
+    },
+    async show (req, res) {
         const { user_id } = req.params
 
         const user = await User.findByPk(user_id, {

@@ -14,12 +14,13 @@ routes.post(version + '/user', UserController.store)
 routes.get(version + '/user', UserController.index)
 
 //SECRETS OK
-routes.post(version + '/secret', SecretController.store)
+routes.post(version + '/user/:user_id/secret', SecretController.store)
 routes.get(version + '/secret', SecretController.index)
 routes.get(version + '/secrets', SecretController.show)
 
 routes.post(version + '/users/:user_id/interest', InterestController.store)
 routes.delete(version + '/users/:user_id/interest', InterestController.delete)
-routes.get(version + '/users/:user_id/interest', InterestController.index)
+routes.get(version + '/users/:user_id/interest', InterestController.show)
+routes.get(version + '/interests', InterestController.index)
 
 module.exports = routes;
