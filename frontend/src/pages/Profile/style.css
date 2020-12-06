@@ -135,6 +135,8 @@ input {
 .divider { 
     background-color: rgb(187, 187, 187);
     width: 90%;
+    margin-top: auto;
+    margin-bottom: auto;
     height: 0.5px;
 }
 

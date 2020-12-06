@@ -14,8 +14,8 @@ const SecretForm: React.FC = () => {
 
     const FormWithToasts = () => {
         const context = useAuth();
-        const { signed, user} = context
-        const [name, setName]:any = useState('')
+        const { signed, user } = context
+        const [name, setName]: any = useState('')
         const [secretColor, setColor] = useState('')
         const [secretColor2, setColor2] = useState('')
         const [textColor, setTextColor] = useState('')
@@ -34,7 +34,13 @@ const SecretForm: React.FC = () => {
 
         const SubmitSecret = async (e: FormEvent) => {
             e.preventDefault()
-            await api.post(`/user/${user?.id}/secret`, secreted).then((res) => {
+            await api.post(`/user/${user?.id}/secret`, {
+                name,
+                secret,
+                color1: secretColor2,
+                color2: secretColor,
+                text_color: textColor
+            }).then((res) => {
                 addToast(res.data.success, { appearance: 'success' })
 
             }).catch((err) => {

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../../contexts/auth';
 import logoImg from '../../assets/images/logo.png'
-import profileImg from '../../assets/images/perfil.jpg'
+import profileImg from '../../assets/images/tenor.gif'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt, faLock } from '@fortawesome/free-solid-svg-icons'
-import { Input } from '../../components'
 import { Link } from 'react-router-dom'
 import backIcon from '../../assets/images/icons/back.svg'
 import api from '../../services/api'
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
 
 import Chip from '@material-ui/core/Chip';
 
@@ -34,6 +32,7 @@ const Profile: React.FC = () => {
     const { user, Logout } = context
     const [chipData, setChipData] = useState<ChipData[]>(interests);
     const [userInterests, setUserIntersts] = useState<Interests[]>(allInterests);
+    
 
     useEffect(() => {
         async function getInterests() {
@@ -87,12 +86,13 @@ const Profile: React.FC = () => {
                                 <img className="profile-img" src={profileImg} alt="Perfil" />
                                 <div style={{ fontWeight: 600, color: '#fff', marginTop: 5 }}>{user?.name}</div>
                                 <div style={{ fontSize: 13 }}>20 anos</div>
+                                <div style={{ fontSize: 13 }}>Segredos: {user?.secrets.quantity}</div>
                             </div>
                         </div>
                         <div className="divider"></div>
                         <div className="menu-items">
                             <ul>
-                                <li>{user?.secrets.quantity}</li>
+                                <li></li>
                                 <li onClick={handleLogout}>
                                     <FontAwesomeIcon icon={faLock} /> Alterar Senha
                                 </li>
@@ -118,7 +118,6 @@ const Profile: React.FC = () => {
                                         updateInterest(newValue)
                                     }}
                                     options={userInterests}
-                                    // getOptionLabel={(option) => { option.name }}
                                     renderInput={(params) => (
                                         <div ref={params.InputProps.ref}>
                                             <input type="text" {...params.inputProps} />

@@ -229,8 +229,15 @@
         justify-self: end;
     }
 
+    .buttons-container a:first-child {
+        margin-right: 1.4rem;
+    }
+
     .buttons-container a.jis-meet {
-        margin-right: 1.6rem;
+        margin-right: 1.4rem;
+    }
+    .buttons-container a.archive {
+        margin-right: 1.4rem;
     }
 
     .buttons-container {
@@ -244,6 +251,8 @@
 
     .total-connections {
         grid-area: total;
+        width: 245px;
         justify-self: end;
+        justify-content: space-evenly;
     }
 }
