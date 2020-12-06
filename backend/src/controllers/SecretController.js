@@ -14,7 +14,7 @@ module.exports = {
     },
     async store(req, res){
         const { user_id } = req.params
-        const { name, secret, color, text_color } = req.body
+        const { name, secret, color1, color2, text_color } = req.body
 
         const user = await User.findByPk(user_id)
 
@@ -28,7 +28,8 @@ module.exports = {
         
         const tellSecret = await Secret.create({
             name,
-            color,
+            color1,
+            color2,
             secret,
             text_color,
             user_id

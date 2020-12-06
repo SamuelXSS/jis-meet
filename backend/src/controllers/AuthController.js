@@ -15,7 +15,6 @@ module.exports = {
         
         const user = await User.findOne({ where: { username } })
         const secret = await Secret.findAll({where: { user_id: user.id } })
-        const quantity = await Secret.count({where: { user_id: user.id } })
         
         if(user){
             if(bcrypt.compareSync(pass, user.pass)){
@@ -32,7 +31,7 @@ module.exports = {
                         secrets: {
                             content: secret.secret,
                             color: secret.color,
-                            quantity
+                            quantity: secret.length
                         }
                     }
                 })
