@@ -13,7 +13,7 @@ class Secret extends Model {
         })
     }
     static associate(models){
-        this.belongsTo(models.User, { foreignKey: 'user_id', as: 'secrets' })
+        this.belongsTo(models.User, { foreignKey: 'user_id', as: 'users' })
     }
 }
 

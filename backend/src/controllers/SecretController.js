@@ -1,3 +1,4 @@
+const { associate } = require('../models/Secret')
 const Secret = require('../models/Secret')
 const User = require('../models/User')
 
@@ -8,7 +9,7 @@ module.exports = {
         return res.json(number)
     },
     async index (req, res) {
-        const secrets = await Secret.findAll()
+        const secrets = await Secret.findAll({include: { association: 'users', attributes:['name'] }})
 
         return res.json(secrets)
     },
