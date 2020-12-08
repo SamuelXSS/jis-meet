@@ -14,6 +14,9 @@ export interface Secret {
     color1: string
     color2: string
     text_color: string
+    users: {
+        name: string
+    }
 }
 
 interface SecretItemProps {
@@ -31,7 +34,7 @@ const SecretItem: React.FC<SecretItemProps> = ({ secret }) => {
                 borderImage: `linear-gradient(${secret.color1},${secret.color2})`
             }}>
                 <div style={{color: secret.text_color}}>
-                    {signed ? user?.name : secret.name}
+                    {secret.users.name || 'Anônimo'}
                 </div>
             </header>
     

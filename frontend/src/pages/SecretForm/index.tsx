@@ -75,10 +75,10 @@ const SecretForm: React.FC = () => {
                             value={user?.name}
                             onChange={(e) => { setName(e.target.value) }}
                         />}
-                    <label className="label-font">Cor Box <small>(Background)</small></label>
-                    <TwitterPicker onChange={handleColor} className="color-picker" color={secretColor} onChangeComplete={handleColor} />
                     <label className="label-font">Cor Box <small>(Gradient)</small></label>
                     <TwitterPicker onChange={handleColor2} className="color-picker" color={secretColor2} onChangeComplete={handleColor2} />
+                    <label className="label-font">Cor Box <small>(Background)</small></label>
+                    <TwitterPicker onChange={handleColor} className="color-picker" color={secretColor} onChangeComplete={handleColor} />
                     <label className="label-font">Cor Texto</label>
                     <TwitterPicker onChange={handleTextColor} className="color-picker" color={textColor} onChangeComplete={handleTextColor} />
                     <Textarea
