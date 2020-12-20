@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import api from '../services/api';
+import { Notification } from '../components/Notifications'
 
 interface User {
     id: number,
@@ -55,7 +56,8 @@ export const AuthProvider: React.FC = ({ children }) => {
             return true
         }).catch(err => {
             if (err.response) {
-                return false
+                Notification('error', err.response.data.error)
+                console.log(err.response.data.error)
             }
         })
         return res

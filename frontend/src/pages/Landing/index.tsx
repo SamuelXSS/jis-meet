@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/auth';
-import { ToastProvider, useToasts } from 'react-toast-notifications'
+import { NotificationContainer } from 'react-notifications';
 
 import logoImg from '../../assets/images/logo.png'
 import landingImg from '../../assets/images/bg.png'
@@ -20,16 +20,16 @@ import api from '../../services/api'
 import './styles.css'
 
 const Landing: React.FC = () => {
-    const [totalConnections, setTotalConnections] = useState(0)
-    const [name, setName] = React.useState('')
-    const [userR, setUser] = React.useState('')
-    const [pass, setPass] = React.useState('')
-    const [repass, setRepass] = React.useState('')
-    const [open, setOpen] = React.useState(false);
+    const [ totalConnections, setTotalConnections ] = useState(0)
+    const [ name, setName ] = React.useState('')
+    const [ userR, setUser ] = React.useState('')
+    const [ pass, setPass ] = React.useState('')
+    const [ repass, setRepass ] = React.useState('')
+    const [ open, setOpen ] = React.useState(false);
 
-    const [openLogin, setOpenLogin] = React.useState(false);
-    const [userLogin, setUserLogin] = React.useState('')
-    const [passLogin, setPassLogin] = React.useState('')
+    const [ openLogin, setOpenLogin ] = React.useState(false);
+    const [ userLogin, setUserLogin ] = React.useState('')
+    const [ passLogin, setPassLogin ] = React.useState('')
     const context = useAuth();
     const { signed, user } = context
 
@@ -217,6 +217,7 @@ const Landing: React.FC = () => {
                 </span>
 
             </div>
+            <NotificationContainer/>
         </div>
     )
 }
