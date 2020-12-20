@@ -13,10 +13,17 @@ interface User {
     }
 }
 
+interface Register {
+    name: string,
+    username: string,
+    pass: string,
+}
+
 interface AuthContextData {
     signed: boolean;
     user: User | null
     Login(user: string, pass: string): Promise<any>;
+    Register(user:object): Promise<any>
     Logout(): void;
 }
 
@@ -29,7 +36,8 @@ export function useAuth() {
 }
 
 export const AuthProvider: React.FC = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [ user, setUser ] = useState<User | null>(null);
+    const [ open, setOpen ] = useState(true)
 
     useEffect(() => {
         const storagedUser = localStorage.getItem('@App:user');
@@ -63,6 +71,23 @@ export const AuthProvider: React.FC = ({ children }) => {
         return res
     }
 
+    async function Register(user:Register) {
+        await api.post('/user', {
+            name: user.name,
+            username: user.username,
+            pass: user.pass,
+            token: ''
+
+        }).then(res => {
+            Login(user.username, user.pass)
+            setOpen(false)
+        }).catch(err => {
+            if (err.response) {
+                Notification('error', err.response.data.error)
+            }
+        })
+    }
+
     function Logout() {
         setUser(null);
 
@@ -72,7 +97,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
     return (
-        <AuthContext.Provider value={{ signed: Boolean(user), user, Login, Logout }}>
+        <AuthContext.Provider value={{ signed: Boolean(user), user, Login, Register, Logout }}>
             {children}
         </AuthContext.Provider>
     );

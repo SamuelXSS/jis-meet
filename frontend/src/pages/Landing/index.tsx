@@ -30,6 +30,7 @@ const Landing: React.FC = () => {
     const [ openLogin, setOpenLogin ] = React.useState(false);
     const [ userLogin, setUserLogin ] = React.useState('')
     const [ passLogin, setPassLogin ] = React.useState('')
+    
     const context = useAuth();
     const { signed, user } = context
 
@@ -62,21 +63,12 @@ const Landing: React.FC = () => {
       }
 
     async function Register() {
-        await api.post('/user', {
-            name,
+        const user = {
+            name: name,
             username: userR,
-            pass,
-            token: ''
-
-        }).then(res => {
-            console.log(res);
-            context.Login(userR, pass)
-            setOpen(false)
-        }).catch(err => {
-            if (err.response) {
-                console.log(err.response.data.error)
-            }
-        })
+            pass: pass
+        }
+        context.Register(user)
     }
 
     return (

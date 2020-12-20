@@ -2,7 +2,6 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationManager } from 'react-notifications';
 
 export const Notification = (type: string, response: string) => {
-
     switch (type) {
         case 'info':
             NotificationManager.info(response);

@@ -32,7 +32,7 @@ const Profile: React.FC = () => {
     const { user, Logout } = context
     const [chipData, setChipData] = useState<ChipData[]>(interests);
     const [userInterests, setUserIntersts] = useState<Interests[]>(allInterests);
-    
+
 
     useEffect(() => {
         async function getInterests() {
@@ -68,7 +68,7 @@ const Profile: React.FC = () => {
             <header className="page-profile-header">
                 <div className="top-bar-container">
                     <div>
-                    <Link to="/">
+                        <Link to="/">
                             <img src={backIcon} alt="Voltar" />
                         </Link>
                     </div>
@@ -81,25 +81,36 @@ const Profile: React.FC = () => {
 
                 <div className="sidebar-container">
                     <div className="sidebar">
-                        <div className="avatar-header">
+                        <div className="sidebar-header">
                             <div className="avatar">
                                 <img className="profile-img" src={profileImg} alt="Perfil" />
-                                <div style={{ fontWeight: 600, color: '#fff', marginTop: 5 }}>{user?.name}</div>
-                                <div style={{ fontSize: 13 }}>20 anos</div>
-                                <div style={{ fontSize: 13 }}>Segredos: {user?.secrets.quantity}</div>
+                            </div>
+                            <div style={{ fontWeight: 600, color: '#fff', marginTop: 5 }}>{user?.name}</div>
+                            <div style={{ fontSize: 13 }}>20 anos</div>
+                            <div style={{ fontSize: 13 }}>Segredos: {user?.secrets.quantity}</div>
+                        </div>
+
+                        <div className="divider"></div>
+
+                        <div className="sidebar-content">
+                            <div className="achievments">
+                                Achievments
                             </div>
                         </div>
+
                         <div className="divider"></div>
-                        <div className="menu-items">
-                            <ul>
-                                <li></li>
-                                <li onClick={handleLogout}>
-                                    <FontAwesomeIcon icon={faLock} /> Alterar Senha
-                                </li>
-                                <li onClick={handleLogout}>
-                                    <FontAwesomeIcon icon={faSignOutAlt} /> Logout
-                                </li>
-                            </ul>
+
+                        <div className="sidebar-footer">
+                            <div className="menu-items">
+                                <ul>
+                                    <li onClick={handleLogout}>
+                                        <FontAwesomeIcon icon={faLock} /> Alterar Senha
+                                    </li>
+                                    <li onClick={handleLogout}>
+                                        <Link className="removeLink" to='/'><FontAwesomeIcon icon={faSignOutAlt} /> Logout</Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
