@@ -30,8 +30,8 @@ const Profile: React.FC = () => {
 
     const context = useAuth();
     const { user, Logout } = context
-    const [chipData, setChipData] = useState<ChipData[]>(interests);
-    const [userInterests, setUserIntersts] = useState<Interests[]>(allInterests);
+    const [ chipData, setChipData ] = useState<ChipData[]>(interests);
+    const [ userInterests, setUserIntersts ] = useState<Interests[]>(allInterests);
 
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const Profile: React.FC = () => {
         }
         getInterests()
         getUserInterests()
-    }, []);
+    });
 
     async function updateInterest(value: string) {
         await api.post(`/users/${user?.id}/interest`, {

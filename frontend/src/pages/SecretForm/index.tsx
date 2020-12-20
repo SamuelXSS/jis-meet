@@ -7,6 +7,7 @@ import api from '../../services/api'
 import { TwitterPicker } from 'react-color';
 
 import './styles.css'
+import bg from '../../assets/images/bg-secret.png'
 
 const SecretForm: React.FC = () => {
 
@@ -60,7 +61,7 @@ const SecretForm: React.FC = () => {
 
     return (
         <div id="page-tell-secret" className="container">
-            <PageHeader title="Publique seu maior segredo! Ah, pode ficar tranquilo(a), seu anonimato é garantido.">
+            <PageHeader title="Publique seu maior segredo! Ah, pode ficar tranquilo(a), seu anonimato é garantido." image={bg}>
             </PageHeader>
             <main>
                 <div className="secret-sub-container">

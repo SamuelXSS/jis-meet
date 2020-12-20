@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom'
 
 import logoImg from '../../assets/images/logo.png'
 import backIcon from '../../assets/images/icons/back.svg'
-import bg from '../../assets/images/bg.png'
 
 import './styles.css'
 
 interface PageHeaderProps {
     title: string;
     description?: string;
+    image: any;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = (props) => {
@@ -24,10 +24,10 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
             </div>
 
             <div className="header-content">
-                <img src={bg} className="header-logo" alt="Background" />
                 <strong style={{zIndex:999}}>{props.title}</strong>
                 { props.description && <p style={{zIndex:999}}>{props.description}</p>}
 
+                <img src={props.image} className="header-logo" alt="Background" />
                 {props.children}
             </div>
         </header>

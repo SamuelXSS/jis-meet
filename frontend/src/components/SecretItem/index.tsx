@@ -1,7 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from '../../contexts/auth'
 
 import './styles.css'
 
@@ -24,8 +23,6 @@ interface SecretItemProps {
 }
 
 const SecretItem: React.FC<SecretItemProps> = ({ secret }) => {
-    const context = useAuth();
-    const { signed, user} = context
     
     return (
         <article key={secret.id} className="secret-item">

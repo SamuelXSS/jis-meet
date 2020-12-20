@@ -15,9 +15,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Input } from '../../components'
 
-import api from '../../services/api'
+import { io } from 'socket.io-client'
 
+import api from '../../services/api'
 import './styles.css'
+
+const socket = io('http://localhost:3000')
 
 const Landing: React.FC = () => {
     const [ totalConnections, setTotalConnections ] = useState(0)

@@ -36,6 +36,7 @@
     "react-simple-dropdown": "^3.2.3",
     "react-toast-notifications": "^2.4.0",
     "react-tooltip": "^4.2.11",
+    "socket.io-client": "^3.0.4",
     "typescript": "~3.7.2"
   },
   "scripts": {

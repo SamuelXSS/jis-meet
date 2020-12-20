@@ -11,6 +11,7 @@ import { PageHeader, Input } from '../../components'
 import SecretItem, { Secret } from '../../components/SecretItem'
 
 import api from '../../services/api'
+import bg from '../../assets/images/bg.png'
 
 import './styles.css'
 
@@ -40,6 +41,7 @@ function JisMeet() {
         <div id="page-secret-archive" onLoad={() => { getMeets() }} className="container">
             <PageHeader
                 title="Finalmente, o Jis Meet"
+                image={bg}
                 description="Crie seu perfil para que todos te achem! Lembre-se, todo meio de contato é opcional e a JIS não se responsabiliza por nenhum dado perdido."
             />
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>

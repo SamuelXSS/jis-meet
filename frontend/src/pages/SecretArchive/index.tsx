@@ -6,6 +6,7 @@ import { PageHeader } from '../../components'
 import api from '../../services/api'
 
 import './styles.css'
+import bg from '../../assets/images/bg-secret.png'
 
 function SecretArchive() {
     const [secrets, setSecrets] = useState([])
@@ -21,8 +22,8 @@ function SecretArchive() {
     return (
         <div id="page-secret-archive" onLoad={() => {getSecrets()}} className="container">
             <PageHeader
+                image={bg}
                 title="Olá! Aqui você econtrará todo tipo de conteúdo, tenha cuidado!"
-                description="Basta rolar a tela e interagir curtindo ou comentando nos segredos."
             />
 
             <main>

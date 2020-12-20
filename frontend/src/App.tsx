@@ -5,6 +5,8 @@ import { AuthProvider } from './contexts/auth';
 
 import './assets/styles/global.css'
 
+
+
 function App() {
   return (
     <AuthProvider>

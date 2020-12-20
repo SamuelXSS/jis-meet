@@ -1,28 +1,32 @@
 #page-tell-secret {
     width: 100vw;
     height: 100vh;
+    overflow-x: hidden;
 }
 
 #tell-secret {
     margin-top: 3.2rem;
 }
 
-.secret-box-container{
+.secret-box-container {
     padding-bottom: 20px;
 }
 
 #tell-secret label {
     color: var(--color-text-in-primary);
 }
-.label-font{
+
+.label-font {
     font: 1.4rem Archivo;
 }
-.color-picker{
+
+.color-picker {
     width: 310px !important;
     margin-bottom: 1rem;
     margin-top: 1.4rem;
 }
-#tell-secret button {    
+
+#tell-secret button {
     width: 50%;
     height: 5.6rem;
     background: var(--color-secundary);
@@ -50,7 +54,7 @@
 }
 
 @media (min-width: 700px) {
-    .secret-sub-container{
+    .secret-sub-container {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -58,18 +62,15 @@
     #page-tell-secret {
         max-width: 100%;
     }
-
     #tell-secret {
         display: column;
         grid-template-columns: repeat(4, 1fr);
         column-gap: 16px;
     }
-
-    #tell-secret .input-block + .input-block,
-    #tell-secret .select-block + .select-block {
-        margin-top: 0;    
+    #tell-secret .input-block+.input-block,
+    #tell-secret .select-block+.select-block {
+        margin-top: 0;
     }
-
     .page-tell-secret main {
         padding: 3.2rem 0;
         margin: 0 auto;
