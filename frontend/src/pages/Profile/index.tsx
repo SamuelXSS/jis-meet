@@ -8,9 +8,11 @@ import { Link } from 'react-router-dom'
 import backIcon from '../../assets/images/icons/back.svg'
 import api from '../../services/api'
 
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 import Chip from '@material-ui/core/Chip';
+
 
 import './style.css'
 
@@ -20,18 +22,20 @@ interface ChipData {
 }
 
 interface Interests {
+    inputValue?: string;
     id: number;
     name: string;
 }
+const filter = createFilterOptions<Interests>();
 
 const Profile: React.FC = () => {
-    const interests: any = []
-    const allInterests: any = []
+    let lastId = 0
 
     const context = useAuth();
     const { user, Logout } = context
-    const [ chipData, setChipData ] = useState<ChipData[]>(interests);
-    const [ userInterests, setUserIntersts ] = useState<Interests[]>(allInterests);
+    const [value, setValue] = React.useState<Interests | null >(null);
+    const [chipData, setChipData] = useState<ChipData[]>([]);
+    const [interests, setInterests] = useState<Interests[]>([]);
 
 
     useEffect(() => {
@@ -41,11 +45,16 @@ const Profile: React.FC = () => {
         }
         async function getUserInterests() {
             const res = await api.get('/interests')
-            setUserIntersts(res.data)
+            const id = res.data[res.data.length -1 ].id
+            lastId = id
+
+            setInterests(Object.keys(res.data).map((key) => res.data[key]) as Interests[])
+            
+            console.log(interests.map(x => { return x }))
         }
         getInterests()
         getUserInterests()
-    });
+    }, []);
 
     async function updateInterest(value: string) {
         await api.post(`/users/${user?.id}/interest`, {
@@ -55,8 +64,15 @@ const Profile: React.FC = () => {
             .catch(err => { if (err.response) console.log(err.response.data) })
     }
 
+    async function deleteInterest(value: number) {
+        await api.delete(`/users/${user?.id}/interest/${value}`)
+            .then(res => { console.log(res) })
+            .catch(err => { if (err.response) console.log(err.response.data) })
+    }
+
     const handleDelete = (chipToDelete: ChipData) => () => {
-        setChipData((chips) => chips.filter((chip) => chip.id !== chipToDelete.id));
+        setChipData((chips) => chips.filter((chip) => chip.id !== chipToDelete.id ));
+        deleteInterest(chipToDelete.id)
     };
 
     async function handleLogout() {
@@ -123,16 +139,53 @@ const Profile: React.FC = () => {
                             <div className="profile-content-header">
                                 Interesses:
                                 <Autocomplete
-                                    id="tags-standard"
-                                    onInputChange={(event, newValue) => {
-                                        setChipData([...chipData, { id: 3, name: newValue }])
-                                        updateInterest(newValue)
+                                    value={value}
+                                    onChange={(event, newValue) => {
+                                        if (typeof newValue === 'string') {
+                                            setChipData([...chipData, {
+                                                name: newValue,
+                                                id: lastId + 1
+                                            }]);
+                                            updateInterest(newValue)
+                                        } else if (newValue && newValue.inputValue) {
+                                            setChipData([...chipData, {
+                                                name: newValue.inputValue,
+                                                id: lastId + 1
+                                            }]);
+                                            updateInterest(newValue.inputValue)
+                                        }
                                     }}
-                                    options={userInterests}
+                                    filterOptions={(options, params) => {
+                                        const filtered = filter(options, params);
+
+                                        if (params.inputValue !== '') {
+                                            filtered.push({
+                                                inputValue: params.inputValue,
+                                                name: `Adicionar "${params.inputValue}"`,
+                                                id: lastId + 1
+                                            });
+                                        }
+                                        return filtered;
+                                    }}
+                                    selectOnFocus
+                                    clearOnBlur
+                                    handleHomeEndKeys
+                                    id="free-solo-with-text-demo"
+                                    options={interests}
+                                    getOptionLabel={(option) => {
+                                        if (typeof option === 'string') {
+                                            return option;
+                                        }
+                                        if (option.inputValue) {
+                                            return option.inputValue;
+                                        }
+                                        return option.name;
+                                    }}
+                                    renderOption={(option) => option.name}
+                                    style={{ width: 300 }}
+                                    freeSolo
                                     renderInput={(params) => (
-                                        <div ref={params.InputProps.ref}>
-                                            <input type="text" {...params.inputProps} />
-                                        </div>
+                                        <TextField {...params} variant="outlined" />
                                     )}
                                 />
                             </div>

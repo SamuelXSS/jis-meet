@@ -38,13 +38,16 @@ const Landing: React.FC = () => {
     const { signed, user } = context
 
     useEffect(() => {
-        api.get('/secrets')
+        async function getSecrets(){
+            await api.get('/secrets')
             .then(res => {
                 const total = res.data
                 console.log(res.data)
                 setTotalConnections(total)
             })
-    }, [])
+        }
+        getSecrets()
+    })
 
     const handleClickOpen = (modal: string) => {
         if (modal === 'register') setOpen(true);

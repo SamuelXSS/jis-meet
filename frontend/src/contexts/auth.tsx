@@ -72,6 +72,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
 
     async function Register(user:Register) {
+        console.log(user)
         await api.post('/user', {
             name: user.name,
             username: user.username,

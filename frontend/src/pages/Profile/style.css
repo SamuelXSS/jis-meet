@@ -38,6 +38,18 @@ li:hover {
     color: white;
 }
 
+.MuiInputBase-root {
+    color: white !important;
+}
+
+.MuiTextField-root {
+    width: 250px !important;
+}
+
+.MuiTextField-root:hover {
+    outline: white;
+}
+
 .sidebar-container {
     display: flex;
     align-items: center;
@@ -80,9 +92,7 @@ li:hover {
 .profile-content-header {
     display: flex;
     margin-bottom: 10px;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
 }
 
 .avatar-header {
