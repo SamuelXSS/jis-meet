@@ -6,11 +6,11 @@ require('./database')
 
 const app = express()
 app.use(cors());
+app.use(express.json())
+app.use(routes)
 const io = socket(app.listen(3000), { cors: { origin: '*' } })
 
-app.use(routes)
-app.use(express.json())
 
 io.on('connection', socket => {
-    console.log('new conn')
+    console.log(`Socket conectado: ${socket.id}`)
 })
